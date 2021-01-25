@@ -1,7 +1,7 @@
 import express from 'express';
 import { BigIDConnector } from './BigIDConnector';
 const app = express();
-const port = 3000;
+const port = 8000;
 
 // Load Configuration from .env file
 require('dotenv').config()

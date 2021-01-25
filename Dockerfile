@@ -15,7 +15,7 @@ COPY ./build .
 RUN npm install
 
 # Expose the app's port outside the container
-EXPOSE 3000
+EXPOSE 8000
 
 # Run the app
-CMD [ "node", "index.js" ]
+ENTRYPOINT ["/usr/local/bin/npm", "start"]
