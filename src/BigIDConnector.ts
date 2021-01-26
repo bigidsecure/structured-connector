@@ -26,6 +26,12 @@ export function BigIDConnector(app: express.Application) {
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
 
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
+
         // FORMAT OBJECTS
         // UNCOMMENT
         let result: any = { status: 'success', objects: [] };
@@ -34,7 +40,7 @@ export function BigIDConnector(app: express.Application) {
             let thisObject: any = {};
             // Each object needs a name
             thisObject.objectName = object;
-            thisObject.fields = await objectCache[object].getFields("creds.name", "creds.pass");
+            thisObject.fields = await objectCache[object].getFields(creds.name, creds.pass);
             
             result.objects.push(thisObject);
         }
@@ -56,12 +62,18 @@ export function BigIDConnector(app: express.Application) {
         }
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
+
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
         
         if(objectCache[req.params.objectName] === undefined){
             return res.status(404).send({status: "error", "message": "Not Found"});
         }
 
-        return res.send({ status: "success", objectName: req.params.objectName, fields: await objectCache[req.params.objectName].getFields("creds.name", "creds.pass") });
+        return res.send({ status: "success", objectName: req.params.objectName, fields: await objectCache[req.params.objectName].getFields(creds.name, creds.pass) });
     });
 
     // This endpoint lists the number of records of this object.
@@ -78,7 +90,13 @@ export function BigIDConnector(app: express.Application) {
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
 
-        return res.send({ status: "success", count: await objectCache[req.params.objectName].getRecordCount("creds.name", "creds.pass") });
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
+
+        return res.send({ status: "success", count: await objectCache[req.params.objectName].getRecordCount(creds.name, creds.pass) });
     });
 
     // This endpoint returns records from an object.
@@ -95,12 +113,19 @@ export function BigIDConnector(app: express.Application) {
         }
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
+
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
+
         let offset = parseInt(req.query.Offset as string);
         if(isNaN(offset)){
             offset = 0;
         }
 
-        let records = await objectCache[req.params.objectName].getRecords("creds.name", "creds.pass", offset, req.query.Count, req.query.paginationKey);
+        let records = await objectCache[req.params.objectName].getRecords(creds.name, creds.pass, offset, req.query.Count, req.query.paginationKey);
         return res.send({ status: "success", objectName: req.params.objectName, records: records.records, offset: records.records.length+offset, paginationKey: records.paginationKey });
     });
 
@@ -118,7 +143,13 @@ export function BigIDConnector(app: express.Application) {
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
 
-        return res.send({ status: "success", objectName: req.params.objectName, records: await objectCache[req.params.objectName].getRecord("creds.name", "creds.pass", req.params.recordId) });
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
+
+        return res.send({ status: "success", objectName: req.params.objectName, records: await objectCache[req.params.objectName].getRecord(creds.name, creds.pass, req.params.recordId) });
     });
 
     // This endpoint gets records that match specific criteria
@@ -134,6 +165,12 @@ export function BigIDConnector(app: express.Application) {
         // UNCOMMENT
         // END USE BASIC AUTH FROM BIGID
 
+        // DON'T USE AUTH
+        // COMMENT
+        // let creds = {name: "", pass:""}
+        // COMMENT
+        // END DON'T USE AUTH
+
         req.body = req.query; // REMOVE THIS LINE FOR POST
 
         let offset = parseInt(req.query.Offset as string);
@@ -141,7 +178,7 @@ export function BigIDConnector(app: express.Application) {
             offset = 0;
         }
 
-        let records = await objectCache[req.params.objectName].searchRecords("creds.name", "creds.pass", offset, req.query.Count, req.query.paginationKey, req.body.fieldName, req.body.fieldValue, req.body.isFullMatch === "true");
+        let records = await objectCache[req.params.objectName].searchRecords(creds.name, creds.pass, offset, req.query.Count, req.query.paginationKey, req.body.fieldName, req.body.fieldValue, req.body.isFullMatch === "true");
         return res.send({ status: "success", objectName: req.params.objectName, records: records.records, offset: records.records.length+offset, paginationKey: records.paginationKey });
     });
 

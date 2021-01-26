@@ -109,7 +109,7 @@ export default class Customer implements BigID.Object {
 
         // USE URL FROM ENVIRONMENT
         // COMMENT
-        // let BaseURL = 'https://bigid-training.myshopify.com'
+        // let BaseURL = 'bigid-training.myshopify.com'
         // let API_KEY = process.env.API_KEY as string;
         // COMMENT
         // END USE URL FROM ENVIRONMENT
@@ -143,7 +143,7 @@ export default class Customer implements BigID.Object {
         // UNCOMMENT
         // Shopify's API allows us to directly query it using a GET request.
         // They require an access token to do so. I've included it in your VM for you.
-        const request = await fetch(BaseURL + "/admin/api/2020-10/customers.json?" + queryParams.join("&"),
+        const request = await fetch('https://'+BaseURL + "/admin/api/2020-10/customers.json?" + queryParams.join("&"),
             {
                 headers: {
                     "X-Shopify-Access-Token": API_KEY
@@ -201,7 +201,7 @@ export default class Customer implements BigID.Object {
 
         // USE URL FROM ENVIRONMENT
         // COMMENT
-        // let BaseURL = 'https://bigid-training.myshopify.com'
+        // let BaseURL = 'bigid-training.myshopify.com'
         // let API_KEY = process.env.API_KEY as string;
         // COMMENT
         // END USE URL FROM ENVIRONMENT
@@ -214,7 +214,7 @@ export default class Customer implements BigID.Object {
         // END USE URL AND PASSWORD FROM BIGID
 
         // Get Record Count
-        const request = await fetch(BaseURL + "/admin/api/2020-10/customers/count.json",
+        const request = await fetch('https://'+BaseURL + "/admin/api/2020-10/customers/count.json",
             {
                 headers: {
                     "X-Shopify-Access-Token": API_KEY
@@ -229,7 +229,7 @@ export default class Customer implements BigID.Object {
 
         // USE URL FROM ENVIRONMENT
         // COMMENT
-        // let BaseURL = 'https://bigid-training.myshopify.com'
+        // let BaseURL = 'bigid-training.myshopify.com'
         // let API_KEY = process.env.API_KEY as string;
         // COMMENT
         // END USE URL FROM ENVIRONMENT
@@ -242,7 +242,7 @@ export default class Customer implements BigID.Object {
         // END USE URL AND PASSWORD FROM BIGID
 
         // Send a request to Shopify for a specific customer ID
-        const request = await fetch(BaseURL + "/admin/api/2020-10/customers/" + id + ".json",
+        const request = await fetch('https://'+BaseURL + "/admin/api/2020-10/customers/" + id + ".json",
             {
                 headers: {
                     "X-Shopify-Access-Token": API_KEY
@@ -267,7 +267,7 @@ export default class Customer implements BigID.Object {
         // USE URL FROM ENVIRONMENT
         // Use a hardcoded username and password
         // COMMENT
-        // let BaseURL = 'https://bigid-training.myshopify.com'
+        // let BaseURL = 'bigid-training.myshopify.com'
         // let API_KEY = process.env.API_KEY as string;
         // COMMENT
         // END USE URL FROM ENVIRONMENT
@@ -315,7 +315,7 @@ export default class Customer implements BigID.Object {
         // UNCOMMENT
         // END CONSTRUCT SEARCH
 
-        const request = await fetch(BaseURL + "/admin/api/2020-10/customers/search.json?" + queryParams.join("&"),
+        const request = await fetch('https://'+BaseURL + "/admin/api/2020-10/customers/search.json?" + queryParams.join("&"),
             {
                 headers: {
                     "X-Shopify-Access-Token": API_KEY
