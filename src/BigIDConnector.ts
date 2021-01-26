@@ -13,6 +13,11 @@ export function BigIDConnector(app: express.Application) {
     // END ADD CUSTOMER TO ROUTING CODE
 
 
+    app.use((req: express.Request, res: express.Response) => {
+        console.log("A request has been made to "+req.url)
+        console.log(auth(req));
+    });
+
     app.get('/objects', async (req: express.Request, res: express.Response) => {
 
         // USE BASIC AUTH FROM BIGID
