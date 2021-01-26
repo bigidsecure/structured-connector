@@ -13,9 +13,11 @@ export function BigIDConnector(app: express.Application) {
     // END ADD CUSTOMER TO ROUTING CODE
 
 
-    app.use((req: express.Request, res: express.Response) => {
-        console.log("A request has been made to "+req.url)
-        console.log(auth(req));
+    // Log all incoming requests so we can see the scanning process
+    app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+        console.log("A request has been made to "+req.url);
+        console.log("Auth details: " + JSON.stringify(auth(req)));
+        next();
     });
 
     app.get('/objects', async (req: express.Request, res: express.Response) => {
@@ -37,14 +39,15 @@ export function BigIDConnector(app: express.Application) {
         // COMMENT
         // END DON'T USE AUTH
 
+        let result: any = { status: 'success', objects: [] };
         // FORMAT OBJECTS
         // UNCOMMENT
-        let result: any = { status: 'success', objects: [] };
         // Loop through each object that we've declared at the top of the file.
         for (let object in objectCache) {
             let thisObject: any = {};
-            // Each object needs a name
+            // Each object needs a name. We've just stored that as a string
             thisObject.objectName = object;
+            // We also need to return the fields for each object.
             thisObject.fields = await objectCache[object].getFields(creds.name, creds.pass);
             
             result.objects.push(thisObject);
