@@ -2,9 +2,9 @@ const glob = require('glob');
 var fs = require('fs-extra');
 
 const FOLDER_NAME = "Training Connector";
-fs.removeSync('.git');
 fs.removeSync('../' + FOLDER_NAME);
 fs.copySync('./', '../' + FOLDER_NAME);
+fs.removeSync('../' + FOLDER_NAME+'.git');
 fs.writeFile('../' + FOLDER_NAME + '/Dockerfile', "");
 
 glob('../' + FOLDER_NAME + '/**/*.{ts,js,html}', function (err, files) {
