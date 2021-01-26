@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch, { Response } from "node-fetch";
 import { BigID } from "../BigID";
 
 export default class Customer implements BigID.Object {
@@ -22,7 +22,7 @@ export default class Customer implements BigID.Object {
          * In a production connector, you would save off the fields to save
          * processing power.
          */
-        //UNCOMMENT
+        // UNCOMMENT
         let SampleResponse = {
             "id":4458521428166,
             "email":"scooby.doo@mac.com",
@@ -105,6 +105,28 @@ export default class Customer implements BigID.Object {
         // UNCOMMENT
     }
 
+    /**
+     *
+     *
+     * @param {string} username
+     * @param {string} password
+     * @param {number} [Offset]
+     * @param {number} [Count]
+     * @param {string} [paginationKey]
+     * @returns
+     * @memberof Customer
+     */
+    /**
+     *
+     *
+     * @param {string} username
+     * @param {string} password
+     * @param {number} [Offset]
+     * @param {number} [Count]
+     * @param {string} [paginationKey]
+     * @returns
+     * @memberof Customer
+     */
     async getRecords(username: string,  password: string, Offset?: number, Count?: number, paginationKey?: string) {
 
         // USE URL FROM ENVIRONMENT
@@ -122,6 +144,8 @@ export default class Customer implements BigID.Object {
         // END USE URL AND PASSWORD FROM BIGID
 
         let queryParams = new Array();
+        let data: any;
+        let nextKey = "";
 
         // INCREMENTAL DATA LOADING
         // UNCOMMENT
@@ -149,6 +173,9 @@ export default class Customer implements BigID.Object {
                     "X-Shopify-Access-Token": API_KEY
                 }
             });
+        data = await request.json();
+        // UNCOMMENT
+        // END FETCH RECORDS FROM SHOPIFY
 
         // Shopify uses a header to tell you the pagination key
         // The format is:
@@ -156,7 +183,6 @@ export default class Customer implements BigID.Object {
         // So we need to actually just get the page_info key. Let's use regex to parse that out
         // GET PAGINATION KEY
         // UNCOMMENT
-        let nextKey = "";
         let linkHeader = request.headers.get("link");
         if(!(linkHeader === undefined || linkHeader === null)){
             let match = linkHeader.match(/page_info=([a-zA-Z0-9]+).*>; rel="next"/);
@@ -167,7 +193,6 @@ export default class Customer implements BigID.Object {
         // UNCOMMENT
         // END GET PAGINATION KEY
 
-        const data = await request.json();
 
         let result: BigID.Record[] = new Array();
         // After we have our data from Shopify, we need to format it.
@@ -193,8 +218,6 @@ export default class Customer implements BigID.Object {
         // Return our customers to our routing code in the right format.
         // The routing code will worry about things like the offset for us.
         return {records: result, paginationKey: nextKey};
-        // UNCOMMENT
-        // END FETCH RECORDS FROM SHOPIFY
     }
 
     async getRecordCount(username: string, password: string) {
