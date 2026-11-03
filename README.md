@@ -1,7 +1,33 @@
-# BigID Generic REST API Quickstart
+# Structured Customer Connector (TypeScript Sample)
 
-## Description
-This application is designed to allow you to create a BigID connector in less than 8 hours. 
+An Express/TypeScript training connector that demonstrates BigID’s structured-object REST shape for a `Customer` object. It uses a sample customer response to define flattened fields and calls the Shopify Admin REST API for customer records, counts, and searches.
+
+## Current status and limitations
+
+This is a training scaffold, not a production-ready connector. In particular, the current container/enumeration implementation returns `null`, so BigID cannot use it as a complete connector. The Shopify REST API version is hard-coded to `2020-10`; verify and update API compatibility before testing against a store. The server also logs incoming Basic Auth details—remove that logging before supplying real credentials.
+
+The connector expects Basic Auth from BigID: the username is used as the Shopify shop host and the password as the Shopify Admin API token. Use a test store and least-privilege credentials.
+
+## Run locally
+
+Requires Node.js and npm.
+
+```sh
+npm install
+npx gulp develop
+```
+
+Gulp compiles the TypeScript and starts a watcher-backed development server on **port 8000**. To build the files for the included Dockerfile:
+
+```sh
+npx gulp
+docker build -t structured-customer-connector .
+docker run --rm -p 8000:8000 structured-customer-connector
+```
+
+## REST routes
+
+The Express app exposes `/objects`, `/objects/:objectName/describe`, `/objects/:objectName/count`, `/objects/:objectName/records`, `/objects/:objectName/records/:recordId`, and a prototype search route at `/objects/:objectName/sar`. All routes use HTTP Basic Auth. The search route currently uses `GET` with query parameters and may need adaptation to your BigID connector contract.
 
 <!-- bigidsecure-community-guidance -->
 ## BigID Community
